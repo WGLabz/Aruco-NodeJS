@@ -9,10 +9,13 @@ POST http(s)://<server_url>:8089
 
 {
     "id":4,
-    "size": 300
+    "size": 300,
+    "type": "svg"
 }
 
 ```
+
+In the parameters provided to the call, `type` defines therequested image format. It can be svg or png or jpeg.
 
 The following image shows the same by using Postman.
 

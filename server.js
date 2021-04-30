@@ -1,4 +1,5 @@
 const http = require('http');
+const sharp = require("sharp")
 const port = 8089;
 
 function gtMarkerMatrix(id) {
@@ -62,10 +63,58 @@ const server = http.createServer((req, res) => {
         });
         req.on('end', () => {
             let data = JSON.parse(body);
-            res.statusCode = 200;
-            res.setHeader('Content-Type', 'image/svg+xml');
-            res.write(getImage(data.size || 150, data.id));
-            res.end();
+            let image = getImage(data.size || 150, data.id);
+            if (data.type === "svg") {
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'image/svg+xml');
+                res.write(image);
+                res.end();
+            } else if (data.type === "png") {
+                sharp(Buffer.from(image))
+                    .png()
+                    .toBuffer()
+                    .then(data => {
+                        res.statusCode = 200;
+                        res.setHeader('Content-Type', 'image/png');
+                        res.write(data);
+                        res.end();
+                    })
+                    .catch(err => {
+                        res.statusCode = 500;
+                        res.end(err);
+                    });
+            } else if (data.type === "jpeg") {
+                sharp(Buffer.from(image))
+                    .jpeg()
+                    .toBuffer()
+                    .then(data => {
+                        res.statusCode = 200;
+                        res.setHeader('Content-Type', 'image/jpeg');
+                        res.write(data);
+                        res.end();
+                    })
+                    .catch(err => {
+                        res.statusCode = 500;
+                        res.end(err);
+                    });
+            } else if (data.type === "base64") {
+                sharp(Buffer.from(image))
+                    .png()
+                    .toBuffer()
+                    .then(data => {
+                        res.statusCode = 200;
+                        res.write(data);
+                        res.end();
+                    })
+                    .catch(err => {
+                        res.statusCode = 500;
+                        res.end(err);
+                    });
+            } else {
+                res.statusCode = 500;
+                res.setHeader('Content-Type', 'text/plain');
+                res.end("Please mention the format e.g. svg or image");
+            }
         });
     }
 

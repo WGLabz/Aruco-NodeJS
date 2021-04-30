@@ -17,7 +17,10 @@ LABEL org.label-schema.vcs-ref=$VCS_REF
 LABEL org.label-schema.vendor="WGLabz"
 LABEL org.label-schema.version=$BUILD_VERSION
 LABEL org.label-schema.docker.cmd="docker run -p 8089:8089 -d wglabz/node-aruco"
+
 WORKDIR /usr/src/aruko
+
+RUN npm i sharp
 
 COPY  server.js ./
 
