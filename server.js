@@ -1,6 +1,7 @@
 const http = require('http');
 const sharp = require("sharp")
-const port = 8089;
+
+const port = process.env.PORT || 8089;
 
 function gtMarkerMatrix(id) {
     var ids = [16, 23, 9, 14];
