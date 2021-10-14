@@ -1,1 +1,1 @@
-web: nodemon server.js
+web: pm2 start server.js --watch

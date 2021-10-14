@@ -1,6 +1,11 @@
 {
   "dependencies": {
     "nodemon": "^2.0.13",
+    "pm2": "^5.1.2",
     "sharp": "^0.29.1"
+  },
+  "scripts": {
+    "start": "pm2 start index.js",
+    "dev": "npx supervisor index.js"
   }
 }
