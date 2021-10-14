@@ -1,1 +1,1 @@
-web: pm2 start server.js --watch
+web: pm2 start server.js
