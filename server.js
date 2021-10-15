@@ -1,5 +1,6 @@
 const http = require('http');
-const sharp = require("sharp")
+const sharp = require("sharp");
+var fs = require('fs');
 
 const port = process.env.PORT || 8089;
 
@@ -118,7 +119,14 @@ const server = http.createServer((req, res) => {
             }
         });
     }
-
+    else {
+        fs.readFile('public/index.html', function (err, data) {
+            res.setHeader('Content-Type', 'text/html');
+            res.writeHead(200);
+            res.write(data);
+            res.end();
+        });
+    }
 });
 
 
